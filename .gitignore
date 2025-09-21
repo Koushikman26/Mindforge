@@ -94,3 +94,6 @@ test_results/
 # OS files
 Thumbs.db
 desktop.ini
+
+# Claude AI Assistant
+.claude/
