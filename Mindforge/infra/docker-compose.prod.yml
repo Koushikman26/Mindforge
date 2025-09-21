@@ -1,8 +1,0 @@
-services:
-  app:
-    image: ghcr.io/your-org/hello-world-app:${IMAGE_TAG:-latest}
-    env_file:
-      - ../.env
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
