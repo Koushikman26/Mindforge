@@ -1,2 +1,8 @@
 fastapi==0.112.2
 uvicorn[standard]==0.30.6
+opencv-python==4.8.1.78
+scikit-image==0.21.0
+scipy==1.11.3
+imutils==0.5.4
+aiofiles==24.1.0
+pydantic-settings==2.4.0

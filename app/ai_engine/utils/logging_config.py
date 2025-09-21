@@ -94,10 +94,26 @@ def setup_logging(
 
 class AIEngineLogger:
     """Custom logger class for AI engine components"""
-    
+
     def __init__(self, name: str):
         self.logger = logging.getLogger(name)
         self.component_name = name
+
+    # Delegate standard logging methods to the underlying logger
+    def debug(self, message, *args, **kwargs):
+        return self.logger.debug(message, *args, **kwargs)
+
+    def info(self, message, *args, **kwargs):
+        return self.logger.info(message, *args, **kwargs)
+
+    def warning(self, message, *args, **kwargs):
+        return self.logger.warning(message, *args, **kwargs)
+
+    def error(self, message, *args, **kwargs):
+        return self.logger.error(message, *args, **kwargs)
+
+    def critical(self, message, *args, **kwargs):
+        return self.logger.critical(message, *args, **kwargs)
     
     def log_processing_start(self, operation: str, details: Optional[dict] = None):
         """Log the start of a processing operation"""
@@ -153,6 +169,10 @@ class AIEngineLogger:
 def get_ai_logger(name: str) -> AIEngineLogger:
     """Get an AI engine logger instance"""
     return AIEngineLogger(name)
+
+def get_logger(name: str) -> AIEngineLogger:
+    """Alias for get_ai_logger - provides backward compatibility"""
+    return get_ai_logger(name)
 
 # Performance logging decorator
 def log_performance(logger: AIEngineLogger, operation_name: str):
