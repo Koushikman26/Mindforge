@@ -370,10 +370,8 @@ class TestImageQualityMetrics:
         ]
 
         # Check that steps appear in expected order
-        step_indices = {}
-        for step in steps:
-            if step in expected_order:
-                step_indices[step] = expected_order.index(step)
+
+
 
         # Verify ordering
         previous_idx = -1
