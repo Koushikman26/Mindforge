@@ -1,0 +1,27 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>WS Demo</title>
+<style>body{font-family:sans-serif} .pill{padding:4px 8px;border-radius:12px;display:inline-block} .ok{background:#d1fae5} .warn{background:#fde68a} .bad{background:#fecaca}</style>
+</head><body>
+<h2>Realtime WebSocket Demo</h2>
+<div>Status: <span id="status" class="pill warn">Connecting…</span></div>
+<pre id="log"></pre>
+<script>
+let ws, tries=0;
+const statusEl=document.getElementById('status');
+const logEl=document.getElementById('log');
+function log(x){ logEl.textContent += x + '\n'; logEl.scrollTop = logEl.scrollHeight; }
+function connect(){
+  const backoff = Math.min(10000, 1000 * Math.pow(2, tries));
+  statusEl.textContent = tries? `Reconnecting in ${backoff/1000}s…` : 'Connecting…';
+  statusEl.className = 'pill warn';
+  setTimeout(()=>{
+    ws = new WebSocket(`ws://${location.host}/ws?topics=stock,alerts`);
+    ws.onopen = ()=>{ tries=0; statusEl.textContent='Connected'; statusEl.className='pill ok'; };
+    ws.onmessage = ev => { log(ev.data); };
+    ws.onclose = ()=>{ tries++; statusEl.textContent='Disconnected'; statusEl.className='pill bad'; connect(); };
+    ws.onerror = ()=>{ try{ws.close()}catch(e){} };
+  }, backoff);
+}
+connect();
+</script>
+</body></html>
